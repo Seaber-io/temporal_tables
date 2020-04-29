@@ -11,7 +11,6 @@ DECLARE
   existing_range tstzrange;
   holder record;
   holder2 record;
-  pg_version integer;
 BEGIN
   -- version 0.2.0
 
@@ -67,9 +66,6 @@ BEGIN
 
       RETURN NEW;
     END IF;
-
-    SELECT current_setting('server_version_num')::integer
-    INTO pg_version;
 
     -- check if history table has sys_period
     IF NOT EXISTS(SELECT * FROM pg_attribute WHERE attrelid = history_table::regclass AND attname = sys_period AND NOT attisdropped) THEN
