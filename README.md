@@ -165,6 +165,32 @@ Two comments about those results:
 - original c version makes some use of caching (i.e to share an execution plan), whilst this version doesn't. This is propably accounting for a good chunk of the performance difference. At the moment there's not plan of implementing such caching in this version.
 - The trigger still executes in under 1ms and in production environments the the network latency should be more relevant than the trigger itself.
 
+### Run tests in Docker
+
+Create the container for running tests:
+
+```sh
+docker run -d -v $(pwd):/tmp --name temporal_tables_test -e POSTGRES_PASSWORD=postgres postgres:alpine
+```
+
+If container has been created but not running:
+
+```sh
+docker start temporal_tables_test
+```
+
+Run bash inside the container:
+
+```sh
+docker exec -ti temporal_tables_test bash
+```
+
+From inside the Docker container:
+
+```sh
+cd /tmp && PGUSER=postgres PGPASSWORD=postgres make run_test
+```
+
 <a name="the-team"></a>
 ## The team
 
